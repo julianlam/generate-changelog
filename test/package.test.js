@@ -107,7 +107,7 @@ describe('package', function () {
   describe('calculateNewVersion', function () {
 
     beforeEach(function () {
-      Sinon.stub(Package, 'getUserPackage').returns(Bluebird.resolve({ version: '1.2.3' }));
+      Sinon.stub(Package, 'getUserPackage').returns(Bluebird.resolve({ version: '1.2.3-beta.1' }));
     });
 
     afterEach(function () {
@@ -137,7 +137,7 @@ describe('package', function () {
 
       return Package.calculateNewVersion(options)
       .then(function (version) {
-        Expect(version).to.eql('1.2.4');
+        Expect(version).to.eql('1.2.3');
       });
     });
 
@@ -153,7 +153,7 @@ describe('package', function () {
     it('leaves the version untouched if none of three options is true', function () {
       return Package.calculateNewVersion()
       .then(function (version) {
-        Expect(version).to.eql('1.2.3');
+        Expect(version).to.eql('1.2.3-beta.1');
       });
     });
 
