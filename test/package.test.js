@@ -107,7 +107,7 @@ describe('package', function () {
   describe('calculateNewVersion', function () {
 
     beforeEach(function () {
-      Sinon.stub(Package, 'getUserPackage').returns(Bluebird.resolve({ version: '1.2.3-beta.1' }));
+      Sinon.stub(Package, 'getUserPackage').returns(Bluebird.resolve({ version: '1.2.3' }));
     });
 
     afterEach(function () {
@@ -137,6 +137,42 @@ describe('package', function () {
 
       return Package.calculateNewVersion(options)
       .then(function (version) {
+        Expect(version).to.eql('1.2.4');
+      });
+    });
+
+    it('bumps the major version if major is true and old version is pre-release', function () {
+      Package.getUserPackage.restore();
+      Sinon.stub(Package, 'getUserPackage').returns(Bluebird.resolve({ version: '1.2.3-beta.1' }));
+
+      var options = { major: true };
+
+      return Package.calculateNewVersion(options)
+      .then(function (version) {
+        Expect(version).to.eql('2.0.0');
+      });
+    });
+
+    it('bumps the minor version if minor is true and old version is pre-release', function () {
+      Package.getUserPackage.restore();
+      Sinon.stub(Package, 'getUserPackage').returns(Bluebird.resolve({ version: '1.2.3-beta.1' }));
+
+      var options = { minor: true };
+
+      return Package.calculateNewVersion(options)
+      .then(function (version) {
+        Expect(version).to.eql('1.3.0');
+      });
+    });
+
+    it('bumps the patch version if patch is true and old version is pre-release', function () {
+      Package.getUserPackage.restore();
+      Sinon.stub(Package, 'getUserPackage').returns(Bluebird.resolve({ version: '1.2.3-beta.1' }));
+
+      var options = { patch: true };
+
+      return Package.calculateNewVersion(options)
+      .then(function (version) {
         Expect(version).to.eql('1.2.3');
       });
     });
@@ -153,7 +189,7 @@ describe('package', function () {
     it('leaves the version untouched if none of three options is true', function () {
       return Package.calculateNewVersion()
       .then(function (version) {
-        Expect(version).to.eql('1.2.3-beta.1');
+        Expect(version).to.eql('1.2.3');
       });
     });
 
