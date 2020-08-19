@@ -1,3 +1,11 @@
+# 🚨 This is a fork
+
+_You probably want this original repo: https://github.com/lob/generate-changelog_
+
+This is a fork of JasonCust/generate-changelog, which contains fixes outlined here: https://github.com/lob/generate-changelog/pull/42
+
+The fork further customizes the plugin by integrating the semver dependency instead of incrementing the version number on its own.
+
 # Generate Changelog
 
 [![NPM Version](https://badge.fury.io/js/generate-changelog.svg)](https://www.npmjs.com/package/generate-changelog)
